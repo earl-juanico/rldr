@@ -21,7 +21,7 @@ trajectories/
 └── traj_1278/
 ```
 
-The heatmap_data_collection.ipynb visualizes the distribution of the robot poses in
+The `heatmap_data_collection.ipynb` visualizes the distribution of the robot poses in
 a 5x5 grid with the start pose at the center of this grid. The robot's orientation
 is expressed as angle $\theta$ in degrees with $0^{\circ}$ pointing north.
 
