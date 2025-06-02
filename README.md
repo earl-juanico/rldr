@@ -1,3 +1,10 @@
+# HOWTO:
+This repository contains the full trajectory dataset used for training and
+inference. The following sections discuss details about some details about
+the RL method and training procedure. You may skip these sections to go
+straight to the inference with visualizations.
+
+
 ## Dataset
 
 The dataset was gathered using a Turtlebot3 Burger operated with ROS2 Humble.
@@ -28,24 +35,25 @@ is expressed as angle $\theta$ in degrees with $0^{\circ}$ pointing north.
 ## RL Method
 
 The pose prediction problem is solved by teaching a model with reinforcement learning
-using an Advantage Actor-Critic (A2C) algorithm with Proximal Policy Optimization (PPO).
-The action space is quantized using $5\times5\times 72$ discrete actions representing
-25 Cartesian positions and 72 binned orientation.
+using Deep Deterministic Policy Gradient (DDPG) algorithm that assumes a continuous
+action space for pose estimation.
 
-An alternative approach, which takes advantage of the full continuous action space, is
-the Deep Deterministic Policy Gradient (DDPG) algorithm, which is also an A2C with PPO,
-but without the action quantization.
+A discretized model Advantage Actor-Critic (A2C) model with proximal policy optimization
+is used for hyperparameter tuning before the full DDPG is trained. 
+
 
 ## Training
 
-The main training scripts are `ppo_training.py` and `ddpg_training.py` for A2C and DDPG, 
-respectively. Hyperparameter tuning was implemented using the `ppo_training_hypertune.py`
-and `ddpg_training_hypertune.py` scripts. 
+The main training script is the `ddpg_training.py` for DDPG. 
+Hyperparameter tuning was implemented using the `ppo_training_hypertune.py`.
+ 
 
 ## Inference
+The inference script `infer_utils.py` require ROS2 to execute on the robot. The notebook
+`map_inference_ddpg.ipynb` posted here is the notebook that contains the details of 
+performing inferences that simply reuses the existing 
+dataset to demonstrate the pose prediction performance of checkpoints found in the 
+directory `infer_trajectory`.
 
-The inference script `infer_utils.py` require ROS2 to execute on the robot. The notebooks
-`map_inference_a2c.ipynb` and `map_inference_ddpg.ipynb` posted here simply reuse the existing 
-dataset to demonstrate the pose prediction performance of models `best_72.pt` for A2C and 
-`best_ddpg_2.pt` for DDPG. These models offer substantial opportunities for improvement.
-the RL model. 
+If you do not have physical access to the robot, you may skip the first cell of this 
+notebook.
