@@ -4,6 +4,19 @@ inference. The following sections discuss details about some details about
 the RL method and training procedure. You may skip these sections to go
 straight to the inference with visualizations.
 
+**Clone the Repository**
+```
+git clone https://github.com/earl-juanico/rldr.git
+cd rldr/
+```
+
+**Set Up the Environment (Conda)**
+```
+conda env create -f environment.yml
+conda activate ai322
+```
+
+
 
 ## Dataset
 
@@ -47,6 +60,16 @@ is used for hyperparameter tuning before the full DDPG is trained.
 The main training script is the `ddpg_training.py` for DDPG. 
 Hyperparameter tuning was implemented using the `ppo_training_hypertune.py`.
  
+**Train the Model**
+```
+CUDA_VISIBLE_DEVICES=<device-id> python3 launcher_multiple_optimal_models.py <number_concurrent_runs> <MB_size_per_run> ddpg_training.py
+
+Ex:
+CUDA_VISIBLE_DEVICES=2 python3 launcher_multiple_optimal_models.py 6 10000 ddpg_training.py
+```
+
+
+
 
 ## Inference
 The inference script `infer_utils.py` require ROS2 to execute on the robot. The notebook
